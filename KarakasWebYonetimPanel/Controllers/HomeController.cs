@@ -12,15 +12,19 @@ namespace KarakasWebYonetimPanel.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly fatihkarakaswebContext _fatihkarakasweb;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, fatihkarakaswebContext fatihkarakasweb)
         {
             _logger = logger;
+            _fatihkarakasweb = fatihkarakasweb;
         }
 
         public IActionResult Index()
         {
-            return View();
+            List<Post> posts = _fatihkarakasweb.Post.Where(i => i.IsActive).ToList();
+
+            return View(posts);
         }
 
         public IActionResult Privacy()
